@@ -53,11 +53,10 @@ namespace ContosoUniversityApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(department).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.DepartmentUpdateAsync(department.DepartmentId, department.Name, department.Budget,
+                    department.StartDate, department.InstructorId, department.RowVersion);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +79,8 @@ namespace ContosoUniversityApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Department>> PostDepartment(Department department)
         {
-            _context.Departments.Add(department);
-            await _context.SaveChangesAsync();
+            await _context.DepartmentInsertAsync(department.Name, department.Budget, department.StartDate,
+                    department.InstructorId);
 
             return CreatedAtAction("GetDepartment", new { id = department.DepartmentId }, department);
         }
@@ -96,8 +95,7 @@ namespace ContosoUniversityApi.Controllers
                 return NotFound();
             }
 
-            _context.Departments.Remove(department);
-            await _context.SaveChangesAsync();
+            _context.DepartmentDelete(department.DepartmentId, department.RowVersion);
 
             return department;
         }
