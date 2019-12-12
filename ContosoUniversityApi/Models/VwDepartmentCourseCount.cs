@@ -1,4 +1,4 @@
-﻿namespace ContosoUniversityApi.Context
+﻿namespace ContosoUniversityApi.Models
 {
     public class VwDepartmentCourseCount
     {
