@@ -15,16 +15,13 @@ namespace ContosoUniversityApi.Context
     {
         private readonly IConfiguration _configuration;
 
-        public ContosoUniversityContext()
-        {
-        }
-
-        public ContosoUniversityContext(DbContextOptions<ContosoUniversityContext> options)
-            : base(options)
-        {
-        }
-
         public ContosoUniversityContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public ContosoUniversityContext(DbContextOptions<ContosoUniversityContext> options, IConfiguration configuration)
+            : base(options)
         {
             _configuration = configuration;
         }
@@ -43,7 +40,7 @@ namespace ContosoUniversityApi.Context
         {
             if (!optionsBuilder.IsConfigured && _configuration != null)
             {
-                optionsBuilder.UseSqlServer(_configuration.GetConnectionString(@"ContosoUniversityContext"));
+                optionsBuilder.UseSqlServer(_configuration.GetConnectionString(@"DefaultConnection"));
             }
         }
 
