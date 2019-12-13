@@ -17,7 +17,7 @@ namespace ContosoUniversityApi.Context
             builder.Property(x => x.StartDate).HasColumnName(@"StartDate").HasColumnType("datetime").IsRequired();
             builder.Property(x => x.InstructorId).HasColumnName(@"InstructorID").HasColumnType("int").IsRequired(false);
             builder.Property(x => x.RowVersion).HasColumnName(@"RowVersion").HasColumnType("timestamp").IsRequired().IsFixedLength().HasMaxLength(8).IsRowVersion();
-            builder.Property(x => x.DateModified).HasDefaultValueSql("('0001-01-01T00:00:00.0000000')");
+            builder.Property(x => x.DateModified).HasColumnName(@"DateModified").HasColumnType("datetime2").IsRequired().HasDefaultValueSql(@"getdate()");
             // Foreign keys
             builder.HasOne(a => a.Person).WithMany(b => b.Departments).HasForeignKey(c => c.InstructorId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_dbo.Department_dbo.Instructor_InstructorID");
 

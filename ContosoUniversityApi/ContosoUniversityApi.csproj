@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191213053613_ModifyDateIsRequired.cs" />
+    <Compile Remove="Migrations\20191213053613_ModifyDateIsRequired.Designer.cs" />
+    <Compile Remove="Migrations\20191213053805_ModifyDateIsRequired.cs" />
+    <Compile Remove="Migrations\20191213053805_ModifyDateIsRequired.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
