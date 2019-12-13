@@ -70,11 +70,11 @@ namespace ContosoUniversityApi.Context
             modelBuilder.Entity<DepartmentInsertReturnModel>().HasNoKey();
             modelBuilder.Entity<DepartmentUpdateReturnModel>().HasNoKey();
 
-            modelBuilder.Entity<Course>().Property<bool>("isDeleted").HasColumnType("bit");
+            modelBuilder.Entity<Course>().Property<bool>("IsDeleted").HasColumnType("bit");
             modelBuilder.Entity<Course>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
-            modelBuilder.Entity<Department>().Property<bool>("isDeleted").HasColumnType("bit");
+            modelBuilder.Entity<Department>().Property<bool>("IsDeleted").HasColumnType("bit");
             modelBuilder.Entity<Department>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
-            modelBuilder.Entity<Person>().Property<bool>("isDeleted").HasColumnType("bit");
+            modelBuilder.Entity<Person>().Property<bool>("IsDeleted").HasColumnType("bit");
             modelBuilder.Entity<Person>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
         }
 
