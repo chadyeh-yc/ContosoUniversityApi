@@ -11,7 +11,7 @@ namespace ContosoUniversityApi.Models
         public DateTime? HireDate { get; set; } // HireDate
         public DateTime? EnrollmentDate { get; set; } // EnrollmentDate
         public string Discriminator { get; set; } // Discriminator (length: 128)
-
+        public DateTime DateModified { get; set; }
         // Reverse navigation
 
         /// <summary>

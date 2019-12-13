@@ -11,7 +11,7 @@ namespace ContosoUniversityApi.Models
         public DateTime StartDate { get; set; } // StartDate
         public int? InstructorId { get; set; } // InstructorID
         public byte[] RowVersion { get; set; } // RowVersion (length: 8)
-
+        public DateTime DateModified { get; set; }
         // Reverse navigation
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace ContosoUniversityApi.Models
         /// Parent Person pointed by [Department].([InstructorId]) (FK_dbo.Department_dbo.Instructor_InstructorID)
         /// </summary>
         public virtual Person Person { get; set; } // FK_dbo.Department_dbo.Instructor_InstructorID
-
+        
         public Department()
         {
             Courses = new List<Course>();

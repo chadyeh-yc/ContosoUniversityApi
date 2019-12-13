@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlTypes;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ContosoUniversityApi.Models;
 using Microsoft.Data.SqlClient;
@@ -47,8 +48,7 @@ namespace ContosoUniversityApi.Context
         public bool IsSqlParameterNull(SqlParameter param)
         {
             var sqlValue = param.SqlValue;
-            var nullableValue = sqlValue as INullable;
-            if (nullableValue != null)
+            if (sqlValue is INullable nullableValue)
                 return nullableValue.IsNull;
             return (sqlValue == null || sqlValue == DBNull.Value);
         }
@@ -70,7 +70,6 @@ namespace ContosoUniversityApi.Context
             modelBuilder.Entity<DepartmentInsertReturnModel>().HasNoKey();
             modelBuilder.Entity<DepartmentUpdateReturnModel>().HasNoKey();
         }
-
 
         // Stored Procedures
         public int DepartmentDelete(int? departmentId, byte[] rowVersionOriginal)
@@ -228,5 +227,40 @@ namespace ContosoUniversityApi.Context
             return procResultData;
         }
 
+        public override int SaveChanges()
+        {
+            UpdateDateModified();
+            return base.SaveChanges();
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            UpdateDateModified();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            UpdateDateModified();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+        {
+            UpdateDateModified();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void UpdateDateModified()
+        {
+            var entries = ChangeTracker.Entries();
+            foreach (var entityEntry in entries)
+            {
+                if (entityEntry.State == EntityState.Modified)
+                {
+                    entityEntry.CurrentValues.SetValues(new { DateModified = DateTime.UtcNow });
+                }
+            }
+        }
     }
 }

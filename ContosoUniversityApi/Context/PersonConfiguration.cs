@@ -17,6 +17,7 @@ namespace ContosoUniversityApi.Context
             builder.Property(x => x.HireDate).HasColumnName(@"HireDate").HasColumnType("datetime").IsRequired(false);
             builder.Property(x => x.EnrollmentDate).HasColumnName(@"EnrollmentDate").HasColumnType("datetime").IsRequired(false);
             builder.Property(x => x.Discriminator).HasColumnName(@"Discriminator").HasColumnType("nvarchar").IsRequired().HasMaxLength(128);
+            builder.Property(x => x.DateModified).HasDefaultValueSql("('0001-01-01T00:00:00.0000000')");
         }
     }
 }

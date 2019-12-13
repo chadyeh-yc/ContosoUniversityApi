@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ContosoUniversityApi.Models
 {
@@ -8,7 +9,7 @@ namespace ContosoUniversityApi.Models
         public string Title { get; set; } // Title (length: 50)
         public int Credits { get; set; } // Credits
         public int DepartmentId { get; set; } // DepartmentID
-
+        public DateTime DateModified { get; set; }
         // Reverse navigation
 
         /// <summary>
