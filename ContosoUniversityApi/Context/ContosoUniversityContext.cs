@@ -128,7 +128,7 @@ namespace ContosoUniversityApi.Context
                 .FromSqlRaw(sqlCommand, nameParam, budgetParam, startDateParam, instructorIdParam, procResultParam)
                 .ToList();
 
-            procResult = (int) procResultParam.Value;
+            procResult = (int)procResultParam.Value;
             return procResultData;
         }
 
@@ -196,7 +196,7 @@ namespace ContosoUniversityApi.Context
                 .FromSqlRaw(sqlCommand, departmentIdParam, nameParam, budgetParam, startDateParam, instructorIdParam, rowVersionOriginalParam, procResultParam)
                 .ToList();
 
-            procResult = (int) procResultParam.Value;
+            procResult = (int)procResultParam.Value;
             return procResultData;
         }
 
@@ -288,7 +288,7 @@ namespace ContosoUniversityApi.Context
                 switch (entityEntry.State)
                 {
                     case EntityState.Added:
-                        entityEntry.CurrentValues.SetValues(new { isDeleted  = false});
+                        entityEntry.CurrentValues.SetValues(new { isDeleted = false });
                         break;
                     case EntityState.Deleted:
                         entityEntry.State = EntityState.Modified;
