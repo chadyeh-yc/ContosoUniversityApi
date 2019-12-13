@@ -288,11 +288,15 @@ namespace ContosoUniversityApi.Context
                 switch (entityEntry.State)
                 {
                     case EntityState.Added:
-                        entityEntry.CurrentValues.SetValues(new { isDeleted = false });
+                        entityEntry.CurrentValues.SetValues(new { IsDeleted = false });
                         break;
                     case EntityState.Deleted:
                         entityEntry.State = EntityState.Modified;
-                        entityEntry.CurrentValues.SetValues(new { isDeleted = true });
+                        entityEntry.CurrentValues.SetValues(new { IsDeleted = true });
+                        break;
+                    case EntityState.Detached:
+                    case EntityState.Unchanged:
+                    case EntityState.Modified:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

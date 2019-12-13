@@ -29,6 +29,8 @@ namespace ContosoUniversityApi
         {
             services.AddDbContext<IContosoUniversityContext, ContosoUniversityContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ContosoUniversityContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
         }
 
