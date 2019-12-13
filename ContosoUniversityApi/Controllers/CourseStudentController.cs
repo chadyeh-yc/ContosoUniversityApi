@@ -22,14 +22,14 @@ namespace ContosoUniversityApi.Controllers
 
         // GET: api/CourseStudent
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VwCourseStudent>>> Get()
+        public async Task<ActionResult<IEnumerable<VwCourseStudent>>> GetCourseStudents()
         {
             return await _contosoUniversityContext.VwCourseStudents.ToListAsync();
         }
 
         // GET: api/CourseStudent/5
-        [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<VwCourseStudent>> Get(int id)
+        [HttpGet("{id}", Name = "GetCourseStudent")]
+        public async Task<ActionResult<VwCourseStudent>> GetCourseStudent(int id)
         {
             var courseStudent = await _contosoUniversityContext.VwCourseStudents.FindAsync(id);
 
@@ -41,15 +41,15 @@ namespace ContosoUniversityApi.Controllers
             return courseStudent;
         }
 
-        // GET: api/CourseStudent
-        [HttpGet("GetCount")]
-        public async Task<ActionResult<IEnumerable<VwCourseStudentCount>>> GetCount()
+        // GET: api/CourseStudent/Count
+        [HttpGet("/Count")]
+        public async Task<ActionResult<IEnumerable<VwCourseStudentCount>>> GetCountEnumerable()
         {
             return await _contosoUniversityContext.VwCourseStudentCounts.ToListAsync();
         }
 
-        // GET: api/CourseStudent/5
-        [HttpGet("{id}", Name = "GetCount")]
+        // GET: api/CourseStudent/Count/5
+        [HttpGet("/Count/{id}", Name = "GetCount")]
         public async Task<ActionResult<VwCourseStudentCount>> GetCount(int id)
         {
             var courseStudentCount = await _contosoUniversityContext.VwCourseStudentCounts.FindAsync(id);

@@ -37,7 +37,7 @@ namespace ContosoUniversityApi.Controllers
 
         // GET: api/DepartmentCourseCount/5
         [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<IEnumerable<VwDepartmentCourseCount>>> Get(int id)
+        public async Task<ActionResult<VwDepartmentCourseCount>> Get(int id)
         {
             var sqlQuery = new StringBuilder();
             sqlQuery.AppendLine(" SELECT [DepartmentID] ");
@@ -54,7 +54,7 @@ namespace ContosoUniversityApi.Controllers
                 Precision = 10,
                 Scale = 0
             };
-            return await _contosoUniversityContext.VwDepartmentCourseCounts.FromSqlRaw(sqlQuery.ToString(), departmentIdParam).ToListAsync();
+            return await _contosoUniversityContext.VwDepartmentCourseCounts.FromSqlRaw(sqlQuery.ToString(), departmentIdParam).SingleOrDefaultAsync();
         }
     }
 }
