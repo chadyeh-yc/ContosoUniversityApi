@@ -17,6 +17,7 @@ namespace ContosoUniversityApi.Context
             builder.Property(x => x.Credits).HasColumnName(@"Credits").HasColumnType("int").IsRequired();
             builder.Property(x => x.DepartmentId).HasColumnName(@"DepartmentID").HasColumnType("int").IsRequired();
             builder.Property(x => x.DateModified).HasDefaultValueSql("('0001-01-01T00:00:00.0000000')");
+
             // Foreign keys
             builder.HasOne(a => a.Department).WithMany(b => b.Courses).HasForeignKey(c => c.DepartmentId).HasConstraintName("FK_dbo.Course_dbo.Department_DepartmentID");
         }

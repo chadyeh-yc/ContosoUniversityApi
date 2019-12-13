@@ -69,6 +69,13 @@ namespace ContosoUniversityApi.Context
 
             modelBuilder.Entity<DepartmentInsertReturnModel>().HasNoKey();
             modelBuilder.Entity<DepartmentUpdateReturnModel>().HasNoKey();
+
+            modelBuilder.Entity<Course>().Property<bool>("isDeleted").HasColumnType("bit");
+            modelBuilder.Entity<Course>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
+            modelBuilder.Entity<Department>().Property<bool>("isDeleted").HasColumnType("bit");
+            modelBuilder.Entity<Department>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
+            modelBuilder.Entity<Person>().Property<bool>("isDeleted").HasColumnType("bit");
+            modelBuilder.Entity<Person>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
         }
 
         // Stored Procedures
@@ -230,27 +237,34 @@ namespace ContosoUniversityApi.Context
         public override int SaveChanges()
         {
             UpdateDateModified();
+            UpdateSoftDeleteStatuses();
             return base.SaveChanges();
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             UpdateDateModified();
+            UpdateSoftDeleteStatuses();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             UpdateDateModified();
+            UpdateSoftDeleteStatuses();
             return base.SaveChangesAsync(cancellationToken);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
         {
             UpdateDateModified();
+            UpdateSoftDeleteStatuses();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
+        /// <summary>
+        /// Updates the date modified.
+        /// </summary>
         private void UpdateDateModified()
         {
             var entries = ChangeTracker.Entries();
@@ -259,6 +273,29 @@ namespace ContosoUniversityApi.Context
                 if (entityEntry.State == EntityState.Modified)
                 {
                     entityEntry.CurrentValues.SetValues(new { DateModified = DateTime.UtcNow });
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the soft delete statuses.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        private void UpdateSoftDeleteStatuses()
+        {
+            foreach (var entityEntry in ChangeTracker.Entries())
+            {
+                switch (entityEntry.State)
+                {
+                    case EntityState.Added:
+                        entityEntry.CurrentValues.SetValues(new { isDeleted  = false});
+                        break;
+                    case EntityState.Deleted:
+                        entityEntry.State = EntityState.Modified;
+                        entityEntry.CurrentValues.SetValues(new { isDeleted = true });
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
         }
